@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biểu Đồ Thời Gian Thực và Nhiệt Độ</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <style>
+        /* Màu xanh cho nhiệt độ dưới 20°C */
+        .temperature-blue {
+            color: blue;
+        }
+
+        /* Màu cam cho nhiệt độ từ 20°C đến 30°C */
+        .temperature-orange {
+            color: orange;
+        }
+
+        /* Màu đỏ cho nhiệt độ trên 30°C */
+        .temperature-red {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Biểu Đồ, Nhiệt Độ và Độ Ẩm Hiện Tại</h1>
+    <p id="currentTemperature" class="temperature-blue">Nhiệt Độ Hiện Tại: Loading...</p>
+    <p id="currentHumidity">Độ Ẩm Hiện Tại: Loading...</p>
+    <canvas id="temperatureHumidityChart" width="400" height="200"></canvas>
+
+    <script>
+        const currentTemperatureElement = document.getElementById("currentTemperature");
+        const currentHumidityElement = document.getElementById("currentHumidity");
+        const temperatureHumidityChartElement = document.getElementById("temperatureHumidityChart");
+        const temperatureData = [];
+        const humidityData = [];
+        const timeData = [];
+
+        const temperatureHumidityChart = new Chart(temperatureHumidityChartElement, {
+            type: 'line',
+            data: {
+                labels: timeData,
+                datasets: [
+                    {
+                        label: 'Nhiệt Độ',
+                        data: temperatureData,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    },
+                    {
+                        label: 'Độ Ẩm',
+                        data: humidityData,
+                        borderColor: 'rgba(192, 75, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        ticks: {
+                            stepSize: 1,
+                            callback: function (value) {
+                                // Hiển thị thời gian thực và ngày giờ
+                                return moment().add(value, 'seconds').format('HH:mm:ss');
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Hiển thị giá trị nhiệt độ và độ ẩm ngẫu nhiên và cập nhật biểu đồ
+        function displayRandomData() {
+            const randomTemperature = Math.floor(Math.random() * 31) + 10; // Nhiệt độ từ 10 đến 40 độ Celsius
+            const randomHumidity = Math.floor(Math.random() * 61) + 40; // Độ ẩm từ 40% đến 100%
+            
+            temperatureData.push(randomTemperature);
+            humidityData.push(randomHumidity);
+            
+            // Lấy thời gian hiện tại dưới dạng giây
+            const currentTimeInSeconds = moment().unix();
+            timeData.push(currentTimeInSeconds);
+
+            // Giới hạn số lượng điểm trên biểu đồ
+            if (temperatureData.length > 10) {
+                temperatureData.shift();
+                humidityData.shift();
+                timeData.shift();
+            }
+            
+            temperatureHumidityChart.update();
+            
+            // Cập nhật thông tin hiện tại và màu sắc dựa trên nhiệt độ
+            currentTemperatureElement.textContent = `Nhiệt Độ Hiện Tại: ${randomTemperature} °C`;
+            if (randomTemperature < 20) {
+                currentTemperatureElement.className = 'temperature-blue';
+            } else if (randomTemperature >= 20 && randomTemperature < 30) {
+                currentTemperatureElement.className = 'temperature-orange';
+            } else {
+                currentTemperatureElement.className = 'temperature-red';
+            }
+            
+            currentHumidityElement.textContent = `Độ Ẩm Hiện Tại: ${randomHumidity}%`;
+        }
+
+        // Cập nhật giá trị nhiệt độ và độ ẩm mỗi 2 giây
+        setInterval(displayRandomData, 2000);
+    </script>
+</body>
+</html>

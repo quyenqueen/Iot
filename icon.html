@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cảm Ứng</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .class_nhietDo, .class_doAm, .class_anhSang {
+            height: 100%;
+            width: 33%;
+            border: 1px solid rgb(86, 88, 86);
+            background-color: aquamarine;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .class_1 {
+            display: flex;
+            height: 100px;
+        }
+
+        .class_2 {
+            display: flex;
+            height: 500px;
+        }
+
+        .class_bieuDo {
+            width: 66%;
+            height: 100%;
+            border: 1px solid rgb(86, 88, 86);
+            background-color: antiquewhite;
+            display: flex;
+            /* flex-direction: column; Để nút xuống dưới quạt */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .class_denQuat {
+            width: 33%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .led, .fan {
+            height: 50%;
+            width: 100%;
+            border: 1px solid rgb(86, 88, 86);
+            background-color: aqua;
+            display: flex;
+            flex-direction: column; /* Để nút xuống dưới quạt */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fan i,.led i {
+            font-size: 100px;
+        }
+        .fan.on i {
+            animation: spin 2s infinite linear;
+        }
+        .fan.off {
+            animation-play-state: paused;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .led.on i {
+            color: yellow; /* Đổi màu sang vàng khi đèn sáng */
+        }
+        button{
+            width: 70px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="class_1">
+        <div class="class_nhietDo">
+            <p id="temperature" class="nhietDo">Nhiệt Độ : Loading...</p>
+        </div>
+        <div class="class_doAm">
+            <p id="humidity" class="doAm">Độ Ẩm : Loading...</p>
+        </div>
+        <div class="class_anhSang">
+            <p id="light" class="anhSang"> Ánh Sáng : Loading...</p>
+        </div>
+    </div>
+    <div class="class_2">
+        <div class="class_bieuDo">
+            Biểu Đồ
+        </div>
+        <div class="class_denQuat">
+            <div class="led" id="led">
+                <i class="bi bi-lightbulb"></i>
+                <br>
+                <div>
+                    <button style="background-color: rgb(143, 241, 143);" onclick="turnLedOn()">On</button>
+                    <button style="background-color: rgb(243, 107, 107);" onclick="turnLedOff()">Off</button>
+                </div>
+            </div>
+            <div class="fan" id="fan">
+                <i class="fas fa-fan"></i>
+                <br>
+                <div>
+                    <button style="background-color: rgb(143, 241, 143);" onclick="turnFanOn()">On</button>
+                    <button style="background-color: rgb(243, 107, 107);" onclick="turnFanOff()">Off</button>
+                </div>
+                <!-- Nút được đặt dưới quạt -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isFanOn = false;
+        let isLedOn = false;
+
+        const temperature = document.getElementById("temperature");
+        const humidity = document.getElementById("humidity");
+        const light = document.getElementById("light");
+
+        function getRandomTemperature() {
+            return Math.floor(Math.random() * 31) + 10;
+        }
+        function getRandomHumidity() {
+            return  Math.floor(Math.random() * 61) + 40; 
+        }
+        function getRandomLight() {
+            return  Math.floor(Math.random() * 1001); 
+        }
+        
+
+        function update() {
+            const randomTemperature = getRandomTemperature();
+            temperature.textContent = `Nhiệt Độ : ${randomTemperature} °C`;
+
+            const randomHumidity = getRandomHumidity();
+            humidity.textContent = `Độ Ẩm : ${randomHumidity} %`;
+
+            const randomLight = getRandomLight();
+            light.textContent = `Ánh Sáng : ${randomLight} lux`;
+        }
+
+        function turnFanOn() {
+            const fanElement = document.getElementById("fan");
+            isFanOn = true;
+            fanElement.classList.remove("off");
+            fanElement.classList.add("on");
+        }
+
+        function turnFanOff() {
+            const fanElement = document.getElementById("fan");
+            isFanOn = false;
+            fanElement.classList.remove("on");
+            fanElement.classList.add("off");
+        }
+
+        function turnLedOn() {
+            const lightElement = document.getElementById("led");
+            isLedOn = true;
+            lightElement.classList.add("on");
+        }
+
+        function turnLedOff() {
+            const lightElement = document.getElementById("led");
+            isLedOn = false;
+            lightElement.classList.remove("on");
+        }
+
+        // Cập nhật nhiệt độ ngẫu nhiên ban đầu và sau mỗi 2 giây
+        update;
+        setInterval(update, 5000);
+
+    </script>
+</body>
+</html>
