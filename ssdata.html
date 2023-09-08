@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENSORDATA</title>
+    <style>
+        .menu {
+            background: linear-gradient(to left, rgb(103, 160, 187), rgb(238, 158, 222));
+            color: #fff; /* Màu chữ */
+            height: 50px; /* Chiều cao của thanh menu */
+            border: 1px solid rgb(86, 88, 86);
+        }
+
+        /* Thiết lập kiểu dáng cho danh sách menu */
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex; /* Sử dụng flexbox để căn chỉnh lựa chọn */
+            justify-content: space-around; /* Căn các lựa chọn đều nhau */
+            align-items: center; /* Căn dọc giữa */
+            height: 100%; /* Làm cho menu chiếm toàn bộ chiều cao của thanh menu */
+        }
+
+        /* Thiết lập kiểu dáng cho từng mục menu */
+        .menu ul li {
+            flex: 1; /* Chia đều không gian cho từng lựa chọn */
+            text-align: center; /* Căn chữ giữa */
+        }
+
+        /* Thiết lập kiểu dáng cho liên kết menu */
+        .menu ul li a {
+            text-decoration: none; /* Loại bỏ gạch chân liên kết */
+            color: #fff; /* Màu chữ */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #333;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        thead {
+            background-color: #333;
+            color: #fff;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #ddd;
+        }
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <ul>
+            <li><a href="dashboard.html">DASHBOARD</a></li>
+            <li><a href="profile.html">PROFILE</a></li>
+            <li><a href="ssdata.html">SENSOR DATA</a></li>
+            <li><a href="action.html">ACTION</a></li>
+        </ul>
+    </div>
+    <h1>SENSOR DATA</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>DATE</th>
+                <th>TIME</th>
+                <th>TEMPERATURE</th>
+                <th>HUMIDITY</th>
+                <th>LIGHT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>9/8/2023</th>
+                <th>9:45:10</th>
+                <th>30°C</th>
+                <th>80%</th>
+                <th>100 lux</th>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
